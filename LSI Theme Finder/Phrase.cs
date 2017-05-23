@@ -8,7 +8,7 @@ namespace LSI_Theme_Finder
     {
         public static IEnumerable<string> SplitBySize(string text, int size)
         {
-            var words = text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var words = text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Clean()).ToList();
 
             if (size == 1)
             {
@@ -30,6 +30,7 @@ namespace LSI_Theme_Finder
                     subList.Add(words[i - j]);
                 }
 
+                subList.Reverse();
                 results.Add(string.Join(" ", subList));
             }
             return results;

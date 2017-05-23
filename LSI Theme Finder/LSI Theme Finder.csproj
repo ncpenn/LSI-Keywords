@@ -40,6 +40,7 @@
     <Compile Include="Models\ThemedResult.cs" />
     <Compile Include="Phrase.cs" />
     <Compile Include="ThemeUnit.cs" />
+    <Compile Include="WordHelper.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
