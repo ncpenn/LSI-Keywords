@@ -31,11 +31,11 @@ namespace FormsApp
             var themes = worker.GetThemeElements(_pageText);
             _pageText = new List<string>();
 
-            var phrases = themes.Skip(1).SelectMany(x => x).OrderByDescending(a => a.Rank).Select(y => y.Phrase + " | " + y.Rank);
-            var resultWindow = new Form2(themes[0].OrderByDescending(x => x.Rank).Select(x =>x.Phrase + " | " + x.Rank), phrases);
+            var words = themes.ThemeWords.OrderByDescending(a => a.Item2).Select(y => y.Item1 + " | " + y.Item2);
+            var phrases = themes.ThemePhrases.OrderByDescending(a => a.Item2).Select(y => y.Item1 + " | " + y.Item2);
+            var resultWindow = new Form2(words, phrases);
             resultWindow.Visible = true;
         }
-
 
         private void submitPageText_Click(object sender, EventArgs e)
         {

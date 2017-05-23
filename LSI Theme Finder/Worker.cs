@@ -1,5 +1,6 @@
 ﻿using LSI_Theme_Finder.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LSI_Theme_Finder
 {
@@ -8,11 +9,13 @@ namespace LSI_Theme_Finder
         private IReadOnlyCollection<string> _ignoreWords = new List<string> { "a", "and", "an", "the", "is", "are", "but", "still", "while", "I", "we", "you", "because", "when", "what" };
 
 
-        public List<List<ThemedResult>> GetThemeElements(IEnumerable<string> incoming, uint maxPhraseSize = 4, IEnumerable<string> ignoreWords = null)
+        public ThemedResult GetThemeElements(IEnumerable<string> incoming, uint maxPhraseSize = 4, IEnumerable<string> ignoreWords = null)
         {
+            var themeResult = new ThemedResult();
+
             if (maxPhraseSize < 1)
             {
-                return new List<List<ThemedResult>>();
+                return new ThemedResult();
             }
 
             if (ignoreWords == null)
@@ -20,14 +23,13 @@ namespace LSI_Theme_Finder
                 ignoreWords = _ignoreWords;
             }
 
-            var results = new List<List<ThemedResult>>();
-
-            for (int i = 1; i <= maxPhraseSize; i++)
+            themeResult.ThemeWords.AddRange(ThemeUnit.GetThemeWords(incoming, ignoreWords));
+            for (int i = 2; i <= maxPhraseSize; i++)
             {
-                results.Add(ThemeUnit.Get(incoming, ignoreWords, i));
+                themeResult.ThemePhrases.AddRange(ThemeUnit.GetThemePhrases(incoming, themeResult.ThemeWords.Select(x => x.Item1), i));
             }
 
-            return results;
+            return themeResult;
         }
     }
 }
