@@ -30,6 +30,10 @@ namespace FormsApp
             var worker = new Worker();
             var themes = worker.GetThemeElements(_pageText);
             _pageText = new List<string>();
+
+            var phrases = themes.Skip(1).SelectMany(x => x).OrderByDescending(a => a.Rank).Select(y => y.Phrase + " | " + y.Rank);
+            var resultWindow = new Form2(themes[0].OrderByDescending(x => x.Rank).Select(x =>x.Phrase + " | " + x.Rank), phrases);
+            resultWindow.Visible = true;
         }
 
 
@@ -38,7 +42,7 @@ namespace FormsApp
             var text = pageText.Text;
             if (!string.IsNullOrWhiteSpace(text))
             {
-                var cleanedText = pageText.Text.Trim().Where(c => !char.IsPunctuation(c)).Aggregate("", (current, c) => current + c).ToLowerInvariant();
+                var cleanedText = pageText.Text.Trim().ToLowerInvariant();
                 _pageText.Add(cleanedText);
 
                 pageText.Text = string.Empty;

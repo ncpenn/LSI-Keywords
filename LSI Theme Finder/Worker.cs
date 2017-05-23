@@ -5,7 +5,8 @@ namespace LSI_Theme_Finder
 {
     public class Worker
     {
-        private IReadOnlyCollection<string> _ignoreWords = new List<string> { "a", "and", "an", "the" };
+        private IReadOnlyCollection<string> _ignoreWords = new List<string> { "a", "and", "an", "the", "is", "are", "but" };
+
 
         public List<List<ThemedResult>> GetThemeElements(IEnumerable<string> incoming, uint maxPhraseSize = 4, IEnumerable<string> ignoreWords = null)
         {
